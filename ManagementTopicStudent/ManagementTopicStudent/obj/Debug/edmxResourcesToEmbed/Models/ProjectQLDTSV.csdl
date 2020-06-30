@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ManagementTopicStudentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DeTai">
+    <Key>
+      <PropertyRef Name="MaDT" />
+    </Key>
+    <Property Name="MaDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoaiDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NoiDung" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="MaNhom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaGV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="GiaoVien" Relationship="Self.FK_DeTai_GiaoVien" FromRole="DeTai" ToRole="GiaoVien" />
+    <NavigationProperty Name="Nhom" Relationship="Self.FK_DeTai_Nhom" FromRole="DeTai" ToRole="Nhom" />
+    <NavigationProperty Name="TienDoes" Relationship="Self.FK_TienDo_DeTai" FromRole="DeTai" ToRole="TienDo" />
+  </EntityType>
+  <EntityType Name="GiaoVien">
+    <Key>
+      <PropertyRef Name="MaGV" />
+    </Key>
+    <Property Name="MaGV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenGV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EmailGV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_GiaoVien" FromRole="GiaoVien" ToRole="DeTai" />
+  </EntityType>
+  <EntityType Name="Nhom">
+    <Key>
+      <PropertyRef Name="MaNhom" />
+    </Key>
+    <Property Name="MaNhom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenNhom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_Nhom" FromRole="Nhom" ToRole="DeTai" />
+    <NavigationProperty Name="SinhViens" Relationship="Self.FK_SinhVien_Nhom" FromRole="Nhom" ToRole="SinhVien" />
+    <NavigationProperty Name="TienDoes" Relationship="Self.FK_TienDo_Nhom" FromRole="Nhom" ToRole="TienDo" />
+  </EntityType>
+  <EntityType Name="SinhVien">
+    <Key>
+      <PropertyRef Name="MaSV" />
+    </Key>
+    <Property Name="MaSV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenSV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaNhom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GioiTinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EmailSV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DienThoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Nhom" Relationship="Self.FK_SinhVien_Nhom" FromRole="SinhVien" ToRole="Nhom" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TienDo">
+    <Key>
+      <PropertyRef Name="MaTienDo" />
+    </Key>
+    <Property Name="MaTienDo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TaiLieu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ThoiGianKT" Type="DateTime" Precision="0" />
+    <Property Name="NhanXet" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="MaDT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaNhom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DeTai" Relationship="Self.FK_TienDo_DeTai" FromRole="TienDo" ToRole="DeTai" />
+    <NavigationProperty Name="Nhom" Relationship="Self.FK_TienDo_Nhom" FromRole="TienDo" ToRole="Nhom" />
+  </EntityType>
+  <Association Name="FK_DeTai_GiaoVien">
+    <End Role="GiaoVien" Type="Self.GiaoVien" Multiplicity="0..1" />
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GiaoVien">
+        <PropertyRef Name="MaGV" />
+      </Principal>
+      <Dependent Role="DeTai">
+        <PropertyRef Name="MaGV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeTai_Nhom">
+    <End Role="Nhom" Type="Self.Nhom" Multiplicity="0..1" />
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nhom">
+        <PropertyRef Name="MaNhom" />
+      </Principal>
+      <Dependent Role="DeTai">
+        <PropertyRef Name="MaNhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TienDo_DeTai">
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
+    <End Role="TienDo" Type="Self.TienDo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeTai">
+        <PropertyRef Name="MaDT" />
+      </Principal>
+      <Dependent Role="TienDo">
+        <PropertyRef Name="MaDT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SinhVien_Nhom">
+    <End Role="Nhom" Type="Self.Nhom" Multiplicity="0..1" />
+    <End Role="SinhVien" Type="Self.SinhVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nhom">
+        <PropertyRef Name="MaNhom" />
+      </Principal>
+      <Dependent Role="SinhVien">
+        <PropertyRef Name="MaNhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TienDo_Nhom">
+    <End Role="Nhom" Type="Self.Nhom" Multiplicity="0..1" />
+    <End Role="TienDo" Type="Self.TienDo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nhom">
+        <PropertyRef Name="MaNhom" />
+      </Principal>
+      <Dependent Role="TienDo">
+        <PropertyRef Name="MaNhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ManagementTopicStudentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DeTais" EntityType="Self.DeTai" />
+    <EntitySet Name="GiaoViens" EntityType="Self.GiaoVien" />
+    <EntitySet Name="Nhoms" EntityType="Self.Nhom" />
+    <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TienDoes" EntityType="Self.TienDo" />
+    <AssociationSet Name="FK_DeTai_GiaoVien" Association="Self.FK_DeTai_GiaoVien">
+      <End Role="GiaoVien" EntitySet="GiaoViens" />
+      <End Role="DeTai" EntitySet="DeTais" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeTai_Nhom" Association="Self.FK_DeTai_Nhom">
+      <End Role="Nhom" EntitySet="Nhoms" />
+      <End Role="DeTai" EntitySet="DeTais" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TienDo_DeTai" Association="Self.FK_TienDo_DeTai">
+      <End Role="DeTai" EntitySet="DeTais" />
+      <End Role="TienDo" EntitySet="TienDoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SinhVien_Nhom" Association="Self.FK_SinhVien_Nhom">
+      <End Role="Nhom" EntitySet="Nhoms" />
+      <End Role="SinhVien" EntitySet="SinhViens" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TienDo_Nhom" Association="Self.FK_TienDo_Nhom">
+      <End Role="Nhom" EntitySet="Nhoms" />
+      <End Role="TienDo" EntitySet="TienDoes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ManagementTopicStudentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DeTai">
+    <Key>
+      <PropertyRef Name="MaDT" />
+    </Key>
+    <Property Name="MaDT" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TenDT" Type="nvarchar" MaxLength="50" />
+    <Property Name="LoaiDT" Type="nvarchar" MaxLength="50" />
+    <Property Name="NoiDung" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaNhom" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaGV" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="GiaoVien">
+    <Key>
+      <PropertyRef Name="MaGV" />
+    </Key>
+    <Property Name="MaGV" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TenGV" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmailGV" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Nhom">
+    <Key>
+      <PropertyRef Name="MaNhom" />
+    </Key>
+    <Property Name="MaNhom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TenNhom" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SinhVien">
+    <Key>
+      <PropertyRef Name="MaSV" />
+    </Key>
+    <Property Name="MaSV" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TenSV" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaNhom" Type="nvarchar" MaxLength="50" />
+    <Property Name="GioiTinh" Type="nvarchar" MaxLength="50" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmailSV" Type="nvarchar" MaxLength="50" />
+    <Property Name="DienThoai" Type="nvarchar" MaxLength="50" />
+    <Property Name="NgaySinh" Type="date" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TienDo">
+    <Key>
+      <PropertyRef Name="MaTienDo" />
+    </Key>
+    <Property Name="MaTienDo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+    <Property Name="TaiLieu" Type="nvarchar" MaxLength="50" />
+    <Property Name="ThoiGianKT" Type="date" />
+    <Property Name="NhanXet" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaDT" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaNhom" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_DeTai_GiaoVien">
+    <End Role="GiaoVien" Type="Self.GiaoVien" Multiplicity="0..1" />
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GiaoVien">
+        <PropertyRef Name="MaGV" />
+      </Principal>
+      <Dependent Role="DeTai">
+        <PropertyRef Name="MaGV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeTai_Nhom">
+    <End Role="Nhom" Type="Self.Nhom" Multiplicity="0..1" />
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nhom">
+        <PropertyRef Name="MaNhom" />
+      </Principal>
+      <Dependent Role="DeTai">
+        <PropertyRef Name="MaNhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SinhVien_Nhom">
+    <End Role="Nhom" Type="Self.Nhom" Multiplicity="0..1" />
+    <End Role="SinhVien" Type="Self.SinhVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nhom">
+        <PropertyRef Name="MaNhom" />
+      </Principal>
+      <Dependent Role="SinhVien">
+        <PropertyRef Name="MaNhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TienDo_DeTai">
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
+    <End Role="TienDo" Type="Self.TienDo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeTai">
+        <PropertyRef Name="MaDT" />
+      </Principal>
+      <Dependent Role="TienDo">
+        <PropertyRef Name="MaDT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TienDo_Nhom">
+    <End Role="Nhom" Type="Self.Nhom" Multiplicity="0..1" />
+    <End Role="TienDo" Type="Self.TienDo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nhom">
+        <PropertyRef Name="MaNhom" />
+      </Principal>
+      <Dependent Role="TienDo">
+        <PropertyRef Name="MaNhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ManagementTopicStudentModelStoreContainer">
+    <EntitySet Name="DeTai" EntityType="Self.DeTai" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GiaoVien" EntityType="Self.GiaoVien" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nhom" EntityType="Self.Nhom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TienDo" EntityType="Self.TienDo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DeTai_GiaoVien" Association="Self.FK_DeTai_GiaoVien">
+      <End Role="GiaoVien" EntitySet="GiaoVien" />
+      <End Role="DeTai" EntitySet="DeTai" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeTai_Nhom" Association="Self.FK_DeTai_Nhom">
+      <End Role="Nhom" EntitySet="Nhom" />
+      <End Role="DeTai" EntitySet="DeTai" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SinhVien_Nhom" Association="Self.FK_SinhVien_Nhom">
+      <End Role="Nhom" EntitySet="Nhom" />
+      <End Role="SinhVien" EntitySet="SinhVien" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TienDo_DeTai" Association="Self.FK_TienDo_DeTai">
+      <End Role="DeTai" EntitySet="DeTai" />
+      <End Role="TienDo" EntitySet="TienDo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TienDo_Nhom" Association="Self.FK_TienDo_Nhom">
+      <End Role="Nhom" EntitySet="Nhom" />
+      <End Role="TienDo" EntitySet="TienDo" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
